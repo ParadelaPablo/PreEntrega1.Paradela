@@ -3,7 +3,7 @@
 const Brand = () => {
 
     return (
-        <a className="navbar-brand" href="#" style={{
+        <a className="navbar-brand" href="Compon" style={{
             backgroundColor: "#333", // Color de fondo gris oscuro
             color: "white", // Color del texto, puedes ajustarlo según tus preferencias
             padding: "10px" // Espaciado interno para hacer que el fondo sea más visible

@@ -1,7 +1,7 @@
 import Brand from "./Brand"
 import CartContainer from "./CartContainer"
 import CategoryItems from "./CategoryItems"
-import MenuButton from "./MenuBotton"
+import MenuButton from './MenuButton';
 
 
 

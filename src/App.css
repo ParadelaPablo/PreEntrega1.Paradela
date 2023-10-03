@@ -1,3 +1,64 @@
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+.product-image {
+  max-width: 200px; /* Define el ancho máximo que deseas para las imágenes */
+  border: 1px solid #ccc; /* Agrega un borde */
+  /* Otros estilos que desees aplicar a todas las imágenes */
+}
+
+.product-detail {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.product-detail h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.product-detail h3 {
+  font-size: 18px;
+}
+
+.product-detail p {
+  margin-top: 10px;
+}
+
+.product-detail button {
+  margin-top: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.product-detail button:hover {
+  background-color: #0056b3;
+}
+
+.item-list {
+  text-align: center; /* Alinea el contenido al centro */
+}
+
+.product-item {
+  display: inline-block; /* Muestra los elementos en línea */
+  width: 300px; /* Ancho fijo para cada elemento */
+  margin: 10px; /* Espacio entre elementos */
+  text-align: left; /* Alinea el contenido de cada elemento a la izquierda */
+}
+
+.item-count-container {
+  display: inline-block ;
+  margin: 10px; /* Espacio entre elementos, ajusta según sea necesario */
+}
