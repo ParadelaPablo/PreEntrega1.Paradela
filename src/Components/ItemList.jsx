@@ -1,6 +1,9 @@
 
 import { useState, useEffect } from 'react';
 import ItemCount from './ItemCount';
+import CircularProgress from '@mui/material/CircularProgress';
+import { db } from '../firebase';
+
 
 // Mock de datos de productos
 const listaDeAnimes = [
@@ -141,15 +144,40 @@ const listaDeAnimes = [
     },
     // Agrega más productos aquí...
   ];
-  
+
   const ItemList = ({ selectedGenre }) => {
     const [items, setItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
-
+    const [isLoading, setIsLoading] = useState(true);
+  
     useEffect(() => {
+      if (listaDeAnimes.length === 0) {
+        console.error('No hay datos en listaDeAnimes para cargar en Firebase.');
+        return;
+      }
+  
+      // Cargamos los datos de listaDeAnimes a Firebase Firestore
+      const animesCollection = db.collection('animes');
+
+      // Realizamos una carga inicial para evitar duplicados
+      animesCollection.get().then((querySnapshot) => {
+        if (querySnapshot.size === 0) {
+          listaDeAnimes.forEach((anime) => {
+            animesCollection.add(anime)
+              .then((docRef) => {
+                console.log('Documento agregado con ID:', docRef.id);
+              })
+              .catch((error) => {
+                console.error('Error al agregar documento:', error);
+              });
+          });
+        }
+      });
+  
       // Simula un llamado asincrónico a los datos después de 2 segundos
       setTimeout(() => {
         setItems(listaDeAnimes);
+        setIsLoading(false);
       }, 2000);
     }, []);
   
@@ -161,39 +189,50 @@ const listaDeAnimes = [
       setSelectedItem(null);
     };
   
-    // Filtra los animes por género seleccionado
+
+    
     const filteredAnimes = selectedGenre
       ? items.filter((item) => item.genres.includes(selectedGenre))
       : items;
   
     return (
       <div className="item-list">
-        {filteredAnimes.map((item) => (
-          <div key={item.id} className="product-item">
-            <img className="product-image" src={item.pictureUrl} alt={item.title} />
-            <div>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <p>Precio: ${item.price}</p>
-              <a href="#" onClick={() => showDetails(item.id)}>Ver detalles</a>
-            </div>
-            <div>
-              <ItemCount stock={item.stock} onAdd={(count) => console.log(`Añadir ${count} ${item.title} al carrito`)} />
-            </div>
-            {selectedItem === item.id && (
-              <div className="product-detail">
-                <h1>Detalles del producto</h1>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          filteredAnimes.map((item) => (
+            <div key={item.id} className="product-item">
+              <img className="product-image" src={item.pictureUrl} alt={item.title} />
+              <div>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
                 <p>Precio: ${item.price}</p>
-                <p>Otro detalle: Agrega tu información aquí</p>
-                <button onClick={closeDetails}>Cerrar detalles</button>
+                <a href="#" onClick={() => showDetails(item.id)}>Ver detalles</a>
               </div>
-            )}
-          </div>
-        ))}
+              <div>
+                <ItemCount stock={item.stock} onAdd={(count) => console.log(`Añadir ${count} ${item.title} al carrito`)} />
+              </div>
+              {selectedItem === item.id && (
+                <div className="product-detail">
+                  <h1>Detalles del producto</h1>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                  <p>Precio: ${item.price}</p>
+                  <p>Otro detalle: Agrega tu información aquí</p>
+                  <button onClick={closeDetails}>Cerrar detalles</button>
+                </div>
+              )}
+            </div>
+          ))
+        )}
       </div>
     );
   };
   
   export default ItemList;
+
+
+
+
+
+  

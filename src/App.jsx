@@ -18,12 +18,12 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-      <Route path="/" element={<ItemListContainer />}/>
+    <Route path="/" element={<ItemListContainer />}/>
         {/* Define tus otras rutas aquí */}
         <Route path="/" element={<h1>Home</h1>} />
         <Route path="category/:categoryId" element={<ItemList />} />
-
       </Routes>
+
 
       <div>
         
@@ -42,7 +42,11 @@ function App() {
 
         </div>
       </div>
+      
+
     </BrowserRouter>
   );
-}
+}      
+
+
 export default App;

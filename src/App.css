@@ -62,3 +62,16 @@ body {
   display: inline-block ;
   margin: 10px; /* Espacio entre elementos, ajusta según sea necesario */
 }
+
+
+.product-item {
+  position: relative;
+}
+
+.product-detail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: max-content;
+  /* Agrega más estilos según sea necesario */
+}
